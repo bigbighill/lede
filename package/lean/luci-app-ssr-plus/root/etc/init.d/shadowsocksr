@@ -99,7 +99,9 @@ if [ "$stype" == "ss" ] ;then
 "timeout": $(uci_get_by_name $1 timeout 60),
 "method": "$(uci_get_by_name $1 encrypt_method_ss)",
 "reuse_port": true,
-"fast_open": $fastopen
+"fast_open": $fastopen,
+"plugin": "/usr/bin/v2ray-plugin",
+"plugin_opts": "$(uci_get_by_name $GLOBAL_SERVER kcp_param)"
 }
 EOF
 elif [ "$stype" == "ssr" ] ;then
@@ -562,6 +564,7 @@ stop() {
 	killall -q -9 ssr-server
 	killall -q -9 kcptun-client
 	killall -q -9 ssr-local
+	killall -q -9 v2ray-plugin
 	if [ -f /var/run/pdnsd.pid ] ;then
 		kill $(cat /var/run/pdnsd.pid) >/dev/null 2>&1
 	else
