@@ -179,7 +179,7 @@ jobs:
           # CONFIG_PACKAGE_shadowsocksr-libev-ssr-local=y
           # CONFIG_PACKAGE_squid=m
           # CONFIG_PACKAGE_terminfo=y
-           CONFIG_PACKAGE_kmod-tun=y
+          CONFIG_PACKAGE_kmod-tun=y
           EOF
           
           # LuCI主题:
