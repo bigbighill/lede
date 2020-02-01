@@ -141,6 +141,11 @@ o.rmempty = false
 o = s:option(Value, "server_port", translate("Server Port"))
 o.datatype = "port"
 o.rmempty = false
+-- 增加 SS 插件支持
+o = s:option(Value, "plugin", "Plugin")
+o:depends("type", "ss")
+o = s:option(Value, "plugin_opts", "Plugin Opts")
+o:depends("type", "ss")
 
 -- o = s:option(Value, "timeout", translate("Connection Timeout"))
 -- o.datatype = "uinteger"
