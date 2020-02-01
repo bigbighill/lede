@@ -99,11 +99,18 @@ if [ "$stype" == "ss" ] ;then
 "timeout": $(uci_get_by_name $1 timeout 60),
 "method": "$(uci_get_by_name $1 encrypt_method_ss)",
 "reuse_port": true,
-"fast_open": $fastopen,
-"plugin": "/usr/bin/v2ray-plugin",
-"plugin_opts": "$(uci_get_by_name $GLOBAL_SERVER kcp_param)"
+"fast_open": $fastopen
 }
 EOF
+# "plugin": "/usr/bin/v2ray-plugin",
+# "plugin_opts": "$(uci_get_by_name $GLOBAL_SERVER kcp_param)"
+# }
+# EOF
+local plugin=$(uci_get_by_name $1 plugin)
+if [ -n "$plugin" -a -x "/usr/bin/$plugin" ];then
+sed -i "s@$hostip\",@$hostip\",\n    \"plugin\": \"$plugin\",\n    \"plugin_opts\": \"$(uci_get_by_name $1 plugin_opts)\",@" $config_file
+fi
+
 elif [ "$stype" == "ssr" ] ;then
 cat <<-EOF >$config_file
 {
