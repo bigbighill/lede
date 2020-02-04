@@ -294,8 +294,17 @@ do
    else
       proxy_provider_path_exist=1
    fi
-   
 done
+
+if [ -z "$(pidof clash)" ] && [ "$proxy_provider_mode" = 1 ]; then
+   echo "错误: OpenClash 启动失败，请到日志页面查看详细错误信息！" >$START_LOG
+   echo "${LOGTIME} OpenClash Can Not Start, Please Check The Error Info And Try Again" >> $LOG_FILE
+   sleep 10
+   echo "" >$START_LOG
+   stop && echo "" >$START_LOG
+   exit 0
+fi
+
 }
 
 #切割配置文件以分开处理
@@ -523,28 +532,28 @@ yml_game_group_get()
       return
    fi
    
-   if [ -z "$(grep "^ \{0,\}- name: $group" "$GROUP_FILE")" ]; then
-      /usr/share/openclash/yml_groups_set.sh "$group"
-   fi
+   /usr/share/openclash/yml_groups_set.sh "$group"
 }
 
 yml_game_custom()
 {
 #处理游戏规则
-sed -i '/OpenClash-Game-Rules/,/OpenClash-Game-Rules-End/d' "$RULE_FILE" 2>/dev/null
-sed -i '/OpenClash-Game-Rules/d' "$RULE_FILE" 2>/dev/null
-sed -i '/OpenClash-Game-Rules-End/d' "$RULE_FILE" 2>/dev/null
-if [ ! -z "$(grep "^ \{0,\}- GEOIP" "$RULE_FILE")" ]; then
-   sed -i '1,/^ \{0,\}- GEOIP,/{/^ \{0,\}- GEOIP,/s/^ \{0,\}- GEOIP,/#===================== OpenClash-Game-Rules =====================#\n&/}' "$RULE_FILE" 2>/dev/null
-elif [ ! -z "$(grep "^ \{0,\}- MATCH," "$RULE_FILE")" ]; then
-   sed -i '1,/^ \{0,\}- MATCH,/{/^ \{0,\}- MATCH,/s/^ \{0,\}- MATCH,/#===================== OpenClash-Game-Rules =====================#\n&/}' "$RULE_FILE" 2>/dev/null
-else
-   echo "#===================== OpenClash-Game-Rules =====================#" >> "$RULE_FILE" 2>/dev/null
-fi
 rm -rf $GAME_RULE_FILE 2>/dev/null
 config_load "openclash"
 config_foreach yml_game_rule_get "game_config"
+if [ ! -z "$(grep "OpenClash-Game-Rules" "$RULE_FILE")" ]; then
+   sed -i '/OpenClash-Game-Rules/,/OpenClash-Game-Rules-End/d' "$RULE_FILE" 2>/dev/null
+fi
+sed -i '/OpenClash-Game-Rules/d' "$RULE_FILE" 2>/dev/null
+sed -i '/OpenClash-Game-Rules-End/d' "$RULE_FILE" 2>/dev/null
 [ "$set_rule_file" = 1 ] && {
+   if [ ! -z "$(grep "^ \{0,\}- GEOIP" "$RULE_FILE")" ]; then
+      sed -i '1,/^ \{0,\}- GEOIP,/{/^ \{0,\}- GEOIP,/s/^ \{0,\}- GEOIP,/#===================== OpenClash-Game-Rules =====================#\n&/}' "$RULE_FILE" 2>/dev/null
+   elif [ ! -z "$(grep "^ \{0,\}- MATCH," "$RULE_FILE")" ]; then
+      sed -i '1,/^ \{0,\}- MATCH,/{/^ \{0,\}- MATCH,/s/^ \{0,\}- MATCH,/#===================== OpenClash-Game-Rules =====================#\n&/}' "$RULE_FILE" 2>/dev/null
+   else
+      echo "#===================== OpenClash-Game-Rules =====================#" >> "$RULE_FILE" 2>/dev/null
+   fi
    echo "#===================== OpenClash-Game-Rules-End =====================#" >> $GAME_RULE_FILE
    sed -i '/OpenClash-Game-Rules/r/tmp/yaml_game_rule_group.yaml' "$RULE_FILE" 2>/dev/null
 }
@@ -617,6 +626,10 @@ if [ "$enable" -eq 1 ] && [ -f "$CONFIG_FILE" ]; then
        en_mode_tun="1"
        en_mode="fake-ip"
     fi
+    if [ "$en_mode" = "redir-host-tun" ]; then
+       en_mode_tun="1"
+       en_mode="redir-host"
+    fi
     if [ "$en_mode" = "redir-host-vpn" ]; then
        en_mode_tun="2"
        en_mode="redir-host"
@@ -636,6 +649,7 @@ if [ "$enable" -eq 1 ] && [ -f "$CONFIG_FILE" ]; then
     socks_port=$(uci get openclash.config.socks_port 2>/dev/null)
     enable_redirect_dns=$(uci get openclash.config.enable_redirect_dns 2>/dev/null)
     lan_ip=$(uci get network.lan.ipaddr 2>/dev/null |awk -F '/' '{print $1}' 2>/dev/null)
+    wan_ip4=$(ubus call network.interface.wan status 2>/dev/null | grep \"address\" | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' 2>/dev/null)
     lan_ip6=$(uci get network.lan.ip6addr 2>/dev/null)
     direct_dns=$(uci get openclash.config.direct_dns 2>/dev/null)
     disable_masq_cache=$(uci get openclash.config.disable_masq_cache 2>/dev/null)
@@ -706,13 +720,8 @@ mkdir -p /var/etc
 cat > "/var/etc/openclash.include" <<-EOF
 /etc/init.d/openclash restart
 EOF
-             if [ "$en_mode_tun" != "2" ]; then
+             if [ -z "$en_mode_tun" ]; then
                 iptables -t nat -N openclash
-          
-                if [ "$en_mode_tun" = "1" ]; then
-                   iptables -t nat -A openclash -d 198.18.0.0/16 -j RETURN
-                fi
-
                 iptables -t nat -A openclash -d 0.0.0.0/8 -j RETURN
                 iptables -t nat -A openclash -d 10.0.0.0/8 -j RETURN
                 iptables -t nat -A openclash -d 127.0.0.0/8 -j RETURN
@@ -721,20 +730,21 @@ EOF
                 iptables -t nat -A openclash -d 192.168.0.0/16 -j RETURN
                 iptables -t nat -A openclash -d 224.0.0.0/4 -j RETURN
                 iptables -t nat -A openclash -d 240.0.0.0/4 -j RETURN
-                iptables -t nat -A openclash -p tcp -j REDIRECT --to-ports "$proxy_port"
-                iptables -t nat -A zone_lan_prerouting -p tcp -j openclash
-
-                if [ "$en_mode_tun" != 1 ]; then
-                   iptables -t nat -A OUTPUT -p tcp -d 198.18.0.0/16 -j REDIRECT --to-ports "$proxy_port"
+                if [ ! -z "$wan_ip4" ]; then
+                	iptables -t nat -A openclash -d "$wan_ip4" -j RETURN
                 fi
+                iptables -t nat -A openclash -p tcp -j REDIRECT --to-ports "$proxy_port"
+                iptables -t nat -A PREROUTING -p tcp -j openclash
+                iptables -t nat -A OUTPUT -p tcp -d 198.18.0.0/16 -j REDIRECT --to-ports "$proxy_port"
+
           
                 if [ "$ipv6_enable" -eq 1 ]; then
                    ip6tables -t nat -N openclash
                    ip6tables -t nat -A openclash -p tcp -j REDIRECT --to-ports "$proxy_port"
-                   ip6tables -t nat -A zone_lan_prerouting -p tcp -j openclash
+                   ip6tables -t nat -A PREROUTING -p tcp -j openclash
                 fi
              else
-             #TUN2模式
+             #TUN模式
                 ipset create localnetwork hash:net
                 ipset add localnetwork 127.0.0.0/8
                 ipset add localnetwork 10.0.0.0/8
@@ -744,9 +754,13 @@ EOF
                 ipset add localnetwork 240.0.0.0/4
                 ipset add localnetwork 172.16.0.0/12
              #启动TUN
+             if [ "$en_mode_tun" = "2" ]; then
                 ip tuntap add user root mode tun clash0
                 ip link set clash0 up
                 ip route replace default dev clash0 table "$PROXY_ROUTE_TABLE"
+             elif [ "$en_mode_tun" = "1" ]; then
+                ip route replace default dev utun table "$PROXY_ROUTE_TABLE"
+             fi
                 ip rule add fwmark "$PROXY_FWMARK" table "$PROXY_ROUTE_TABLE"
              #设置防火墙
                 iptables -t mangle -N openclash
@@ -756,7 +770,9 @@ EOF
                 iptables -t mangle -I OUTPUT -j openclash
                 iptables -t mangle -I PREROUTING -m set ! --match-set localnetwork dst -j MARK --set-mark "$PROXY_FWMARK"
              #ipv6
-                ip6tables -t mangle -I PREROUTING -j MARK --set-mark "$PROXY_FWMARK"
+                if [ "$ipv6_enable" -eq 1 ]; then
+                   ip6tables -t mangle -I PREROUTING -j MARK --set-mark "$PROXY_FWMARK"
+                fi
              fi
 
              echo "第八步: 重启 Dnsmasq 程序..." >$START_LOG
@@ -855,12 +871,7 @@ stop()
     rm -rf /var/etc/openclash.include 2>/dev/null
 #ipv4
     iptables -t nat -F openclash >/dev/null 2>&1
-
-    nat_clashs=$(iptables -nvL zone_lan_prerouting -t nat |sed 1,2d |sed -n '/openclash/=' |sort -rn)
-    for nat_clash in $nat_clashs; do
-        iptables -t nat -D zone_lan_prerouting "$nat_clash" >/dev/null 2>&1
-    done
-
+    iptables -t nat -D PREROUTING -p tcp -j openclash >/dev/null 2>&1
     iptables -t nat -X openclash >/dev/null 2>&1
     
     out_lines=$(iptables -nvL OUTPUT -t nat |sed 1,2d |sed -n '/198.18.0.0\/16/=' 2>/dev/null |sort -rn)
@@ -870,17 +881,14 @@ stop()
 
 #ipv6
     ip6tables -t nat -F openclash >/dev/null 2>&1
-
-    nat6_clashs=$(ip6tables -nvL zone_lan_prerouting -t nat 2>/dev/null | sed 1,2d | sed -n '/openclash/=' |sort -r)
-    for nat6_clash in $nat6_clashs; do
-        ip6tables -t nat -D zone_lan_prerouting "$nat6_clash" >/dev/null 2>&1
-    done
-
+    ip6tables -t nat -D PREROUTING -p tcp -j openclash >/dev/null 2>&1
     ip6tables -t nat -X openclash >/dev/null 2>&1
+    
 #TUN
     ip link set dev clash0 down >/dev/null 2>&1
     ip tuntap del clash0 mode tun >/dev/null 2>&1
     ip route del default dev clash0 table "$PROXY_ROUTE_TABLE" >/dev/null 2>&1
+    ip route del default dev utun table "$PROXY_ROUTE_TABLE" >/dev/null 2>&1
     ip rule del fwmark "$PROXY_FWMARK" table "$PROXY_ROUTE_TABLE" >/dev/null 2>&1
 
     iptables -t mangle -D OUTPUT -j openclash >/dev/null 2>&1
