@@ -12,8 +12,8 @@ name: OpenWrt-CI
 on:
   push:
     branches: 
-      - passwall
-  #   - master
+  #   - passwall
+      - master
     
   # schedule:
   #   - cron: 0 20 * * *
@@ -31,7 +31,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
         with:
-          ref: master
+        #  ref: master
+          ref: passwall
 
       - name: Space cleanup
         env:
