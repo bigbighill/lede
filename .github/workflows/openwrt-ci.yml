@@ -167,7 +167,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-aria2=y
           # CONFIG_PACKAGE_luci-app-baidupcs-web=m
           # CONFIG_PACKAGE_luci-app-docker=m
-          CONFIG_PACKAGE_luci-app-frpc=y
+          # CONFIG_PACKAGE_luci-app-frpc=y
           # CONFIG_PACKAGE_luci-app-kodexplorer=m
           # CONFIG_PACKAGE_luci-app-minidlna=y
           # CONFIG_PACKAGE_luci-app-openvpn=y
