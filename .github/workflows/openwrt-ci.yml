@@ -12,8 +12,8 @@ name: OpenWrt-CI
 on:
   push:
     branches: 
-  #   - passwall
-      - master
+      - passwall
+  #   - master
     
   # schedule:
   #   - cron: 0 20 * * *
