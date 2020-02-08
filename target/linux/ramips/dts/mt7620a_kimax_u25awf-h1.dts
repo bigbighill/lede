@@ -105,9 +105,11 @@
 	ralink,mtd-eeprom = <&factory 0>;
 };
 
-&state_default {
-	default {
-		ralink,group = "uartf", "ephy", "wled";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		default {
+			ralink,group = "uartf", "ephy", "wled";
+			ralink,function = "gpio";
+		};
 	};
 };

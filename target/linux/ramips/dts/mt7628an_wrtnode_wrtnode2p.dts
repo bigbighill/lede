@@ -23,9 +23,11 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "i2c", "gpio";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "i2c", "gpio";
+			ralink,function = "gpio";
+		};
 	};
 };

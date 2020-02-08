@@ -99,9 +99,11 @@
 	pinctrl-0 = <&pa_pins>;
 };
 
-&state_default {
-	gpio {
-		ralink,group = "uartf", "wled", "nd_sd";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "uartf", "wled", "nd_sd";
+			ralink,function = "gpio";
+		};
 	};
 };

@@ -142,9 +142,11 @@
 	};
 };
 
-&state_default {
-	default {
-		ralink,group = "spi refclk", "uartf", "wled";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		default {
+			ralink,group = "spi refclk", "uartf", "wled";
+			ralink,function = "gpio";
+		};
 	};
 };

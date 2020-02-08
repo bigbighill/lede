@@ -142,9 +142,11 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "rgmii2";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "rgmii2";
+			ralink,function = "gpio";
+		};
 	};
 };

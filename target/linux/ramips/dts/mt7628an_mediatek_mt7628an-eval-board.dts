@@ -7,10 +7,12 @@
 	model = "Mediatek MT7628AN evaluation board";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "i2c";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "i2c";
+			ralink,function = "gpio";
+		};
 	};
 };
 

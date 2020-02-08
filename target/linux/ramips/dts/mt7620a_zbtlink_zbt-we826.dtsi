@@ -82,10 +82,12 @@
 	ralink,mtd-eeprom = <&factory 0>;
 };
 
-&state_default {
-	default {
-		ralink,group = "i2c", "uartf", "wled", "spi refclk", "pa";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		default {
+			ralink,group = "i2c", "uartf", "wled", "spi refclk", "pa";
+			ralink,function = "gpio";
+		};
 	};
 };
 

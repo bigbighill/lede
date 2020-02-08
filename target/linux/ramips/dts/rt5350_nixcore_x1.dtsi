@@ -125,10 +125,12 @@
 	reset-names = "gpio uartf";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "jtag", "led", "spi_cs1";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "jtag", "led", "spi_cs1";
+			ralink,function = "gpio";
+		};
 	};
 };
 

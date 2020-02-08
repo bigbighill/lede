@@ -97,10 +97,12 @@
 	status = "okay";
 };
 
-&state_default {
-	default {
-		ralink,group = "i2c", "wled";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		default {
+			ralink,group = "i2c", "wled";
+			ralink,function = "gpio";
+		};
 	};
 };
 

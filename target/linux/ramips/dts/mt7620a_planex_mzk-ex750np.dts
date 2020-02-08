@@ -125,10 +125,12 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "uartf", "nd_sd", "rgmii2", "wled";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "uartf", "nd_sd", "rgmii2", "wled";
+			ralink,function = "gpio";
+		};
 	};
 };
 

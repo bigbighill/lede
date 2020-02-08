@@ -110,10 +110,12 @@
 	};
 };
 
-&state_default {
-	default {
-		ralink,group = "i2c", "rgmii1", "ephy", "wled";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		default {
+			ralink,group = "i2c", "rgmii1", "ephy", "wled";
+			ralink,function = "gpio";
+		};
 	};
 };
 

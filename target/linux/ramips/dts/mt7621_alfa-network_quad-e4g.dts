@@ -165,10 +165,12 @@
 	status = "okay";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "jtag", "rgmii2", "wdt";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "jtag", "rgmii2", "wdt";
+			ralink,function = "gpio";
+		};
 	};
 };
 

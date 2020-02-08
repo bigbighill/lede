@@ -118,9 +118,11 @@
 	mtd-mac-address = <&factory 0xe000>;
 };
 
-&state_default {
-	gpio {
-		ralink,group = "jtag", "rgmii2", "uart3", "wdt";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "jtag", "rgmii2", "uart3", "wdt";
+			ralink,function = "gpio";
+		};
 	};
 };

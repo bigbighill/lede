@@ -48,10 +48,12 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "wdt", "uart1";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "wdt", "uart1";
+			ralink,function = "gpio";
+		};
 	};
 };
 
