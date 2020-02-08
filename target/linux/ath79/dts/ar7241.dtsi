@@ -46,6 +46,7 @@
 
 	resets = <&rst 9>;
 	reset-names = "mac";
+	phy-mode = "mii";
 	phy-handle = <&swphy4>;
 };
 
