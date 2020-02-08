@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 OUTPUT_FILE=$1
 KERNEL_FILE=$2
