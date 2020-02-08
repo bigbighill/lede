@@ -66,4 +66,5 @@
 
 &ethernet {
 	mtd-mac-address = <&factory 0xf100>;
+	mediatek,portmap = "llllw";
 };

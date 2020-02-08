@@ -4,6 +4,8 @@
 #include <dt-bindings/input/input.h>
 
 / {
+	compatible = "wevo,w2914ns-v2", "mediatek,mt7621-soc";
+
 	chosen {
 		bootargs = "console=ttyS0,57600";
 	};
@@ -23,6 +25,10 @@
 			linux,code = <KEY_WPS_BUTTON>;
 		};
 	};
+};
+
+&xhci {
+	status = "okay";
 };
 
 &spi0 {
@@ -74,7 +80,7 @@
 	wifi@0,0 {
 		compatible = "mediatek,mt76";
 		reg = <0x0000 0 0 0 0>;
-		mediatek,mtd-eeprom = <&factory 0x0>;
+		mediatek,mtd-eeprom = <&factory 0x0000>;
 
 		led {
 			led-sources = <0>;
@@ -101,9 +107,11 @@
 	mtd-mac-address = <&factory 0xe000>;
 };
 
-&state_default {
-	gpio {
-		ralink,group = "wdt", "rgmii2";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "wdt", "rgmii2";
+			ralink,function = "gpio";
+		};
 	};
 };

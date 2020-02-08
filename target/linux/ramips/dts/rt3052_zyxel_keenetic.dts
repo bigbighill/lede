@@ -99,10 +99,12 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "uartf";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "uartf";
+			ralink,function = "gpio";
+		};
 	};
 };
 

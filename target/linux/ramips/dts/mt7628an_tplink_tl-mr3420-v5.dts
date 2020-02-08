@@ -82,13 +82,11 @@
 	status = "okay";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "i2c", "i2s", "p2led_an", "refclk", "uart1", "wdt", "wled_an";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "i2c", "i2s", "p2led_an", "refclk", "uart1", "wdt", "wled_an";
+			ralink,function = "gpio";
+		};
 	};
-};
-
-&esw {
-	mediatek,portmap = <0x3e>;
 };

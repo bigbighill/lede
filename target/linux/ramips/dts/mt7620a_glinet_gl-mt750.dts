@@ -151,9 +151,11 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "wled","ephy","uartf";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "wled","ephy","uartf";
+			ralink,function = "gpio";
+		};
 	};
 };

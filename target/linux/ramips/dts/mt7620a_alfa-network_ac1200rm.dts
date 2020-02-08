@@ -123,10 +123,12 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "nd_sd", "spi refclk", "wled";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "nd_sd", "spi refclk", "wled";
+			ralink,function = "gpio";
+		};
 	};
 };
 

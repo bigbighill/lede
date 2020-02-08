@@ -152,9 +152,11 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "i2c", "rgmii1";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "i2c", "rgmii1";
+			ralink,function = "gpio";
+		};
 	};
 };

@@ -12,15 +12,18 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "wled_an", "refclk", "wdt";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "wled_an", "refclk", "wdt";
+			ralink,function = "gpio";
+		};
 	};
 };
 
 &wmac {
 	status = "okay";
+	ralink,mtd-eeprom = <&factory 0x4>;
 };
 
 &ethernet {

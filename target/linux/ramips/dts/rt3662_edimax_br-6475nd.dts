@@ -121,10 +121,12 @@
 	*/
 };
 
-&state_default {
-	gpio {
-		ralink,group = "spi", "jtag", "uartf";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "spi", "jtag", "uartf";
+			ralink,function = "gpio";
+		};
 	};
 };
 

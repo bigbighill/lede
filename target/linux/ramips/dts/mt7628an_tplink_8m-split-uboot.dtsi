@@ -84,8 +84,5 @@
 
 &ethernet {
 	mtd-mac-address = <&rom 0xf100>;
-};
-
-&esw {
-	mediatek,portmap = <0x3e>;
+	mediatek,portmap = "llllw";
 };

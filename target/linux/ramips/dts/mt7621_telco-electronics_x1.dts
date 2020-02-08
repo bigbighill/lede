@@ -131,10 +131,12 @@
 	mediatek,portmap = "llllw";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "jtag", "uart2", "wdt", "rgmii2";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "jtag", "uart2", "wdt", "rgmii2";
+			ralink,function = "gpio";
+		};
 	};
 };
 

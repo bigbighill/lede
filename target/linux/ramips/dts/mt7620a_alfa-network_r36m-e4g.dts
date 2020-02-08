@@ -154,10 +154,12 @@
 	status = "okay";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "ephy", "pcie", "rgmii1", "wled";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "ephy", "pcie", "rgmii1", "wled";
+			ralink,function = "gpio";
+		};
 	};
 };
 

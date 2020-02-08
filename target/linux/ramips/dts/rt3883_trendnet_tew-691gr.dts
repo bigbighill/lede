@@ -89,10 +89,12 @@
 	status = "okay";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "spi", "i2c", "jtag", "uartf";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "spi", "i2c", "jtag", "uartf";
+			ralink,function = "gpio";
+		};
 	};
 };
 

@@ -117,10 +117,12 @@
 	status = "okay";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "i2c", "uartlite", "pci";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "i2c", "uartlite", "pci";
+			ralink,function = "gpio";
+		};
 	};
 };
 

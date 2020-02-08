@@ -54,9 +54,11 @@
 	mtd-mac-address = <&art 0x6>;
 };
 
-&state_default {
-	default {
-		ralink,group = "i2c", "uartf", "spi refclk";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		default {
+			ralink,group = "i2c", "uartf", "spi refclk";
+			ralink,function = "gpio";
+		};
 	};
 };

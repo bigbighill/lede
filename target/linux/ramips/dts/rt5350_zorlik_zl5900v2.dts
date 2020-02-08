@@ -82,10 +82,12 @@
 	};
 };
 
-&state_default {
-	gpio {
-		ralink,group = "jtag", "uartf";
-		ralink,function = "gpio";
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "jtag", "uartf";
+			ralink,function = "gpio";
+		};
 	};
 };
 
@@ -94,6 +96,7 @@
 };
 
 &esw {
+	mediatek,portmap = <0>;
 	mediatek,portdisable = <0x2f>;
 };
 

@@ -161,15 +161,17 @@
 	status = "okay";
 };
 
-&state_default {
-	gpio {
-		ralink,group = "wdt", "rgmii1";
-		ralink,function = "gpio";
-	};
+&pinctrl {
+	state_default: pinctrl0 {
+		gpio {
+			ralink,group = "wdt", "rgmii1";
+			ralink,function = "gpio";
+		};
 
-	gpio_i2s {
-		ralink,group = "uartf";
-		ralink,function = "gpio i2s";
+		gpio_i2s {
+			ralink,group = "uartf";
+			ralink,function = "gpio i2s";
+		};
 	};
 };
 
