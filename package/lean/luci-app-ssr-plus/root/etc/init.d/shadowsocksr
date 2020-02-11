@@ -571,7 +571,7 @@ stop() {
 	killall -q -9 ssr-server
 	killall -q -9 kcptun-client
 	killall -q -9 ssr-local
-        killall -q -9 simple-obfs
+        killall -q -9 obfs-local
         killall -q -9 v2ray-plugin
 	if [ -f /var/run/pdnsd.pid ] ;then
 		kill $(cat /var/run/pdnsd.pid) >/dev/null 2>&1
