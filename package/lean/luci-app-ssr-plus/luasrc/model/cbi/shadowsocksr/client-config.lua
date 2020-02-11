@@ -141,11 +141,6 @@ o.rmempty = false
 o = s:option(Value, "server_port", translate("Server Port"))
 o.datatype = "port"
 o.rmempty = false
--- 增加 SS 插件支持
-o = s:option(Value, "plugin", "Plugin")
-o:depends("type", "ss")
-o = s:option(Value, "plugin_opts", "Plugin Opts")
-o:depends("type", "ss")
 
 -- o = s:option(Value, "timeout", translate("Connection Timeout"))
 -- o.datatype = "uinteger"
@@ -166,6 +161,15 @@ o:depends("type", "ssr")
 
 o = s:option(ListValue, "encrypt_method_ss", translate("Encrypt Method"))
 for _, v in ipairs(encrypt_methods_ss) do o:value(v) end
+o.rmempty = true
+o:depends("type", "ss")
+
+-- Shadowsocks Plugin
+o = s:option(Value, "plugin", "Plugin")
+o.rmempty = true
+o:depends("type", "ss")
+
+o = s:option(Value, "plugin_opts", "Plugin Opts")
 o.rmempty = true
 o:depends("type", "ss")
 
@@ -355,7 +359,6 @@ o = s:option(Flag, "mux", translate("Mux"))
 o.rmempty = true
 o.default = "0"
 o:depends("type", "v2ray")
-o:depends("type", "trojan")
 
 o = s:option(Value, "concurrency", translate("Concurrency"))
 o.datatype = "uinteger"
@@ -368,6 +371,7 @@ o.rmempty = true
 o.default = "0"
 o:depends("type", "ssr")
 o:depends("type", "ss")
+o:depends("type", "trojan")
 
 o = s:option(Flag, "switch_enable", translate("Enable Auto Switch"))
 o.rmempty = false
