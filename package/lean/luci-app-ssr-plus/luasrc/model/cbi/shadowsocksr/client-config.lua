@@ -169,6 +169,15 @@ for _, v in ipairs(encrypt_methods_ss) do o:value(v) end
 o.rmempty = true
 o:depends("type", "ss")
 
+-- Shadowsocks Plugin
+o = s:option(Value, "plugin", "Plugin")
+o.rmempty = true
+o:depends("type", "ss")
+
+o = s:option(Value, "plugin_opts", "Plugin Opts")
+o.rmempty = true
+o:depends("type", "ss")
+
 o = s:option(ListValue, "protocol", translate("Protocol"))
 for _, v in ipairs(protocol) do o:value(v) end
 o.rmempty = true
@@ -355,7 +364,6 @@ o = s:option(Flag, "mux", translate("Mux"))
 o.rmempty = true
 o.default = "0"
 o:depends("type", "v2ray")
-o:depends("type", "trojan")
 
 o = s:option(Value, "concurrency", translate("Concurrency"))
 o.datatype = "uinteger"
@@ -368,6 +376,7 @@ o.rmempty = true
 o.default = "0"
 o:depends("type", "ssr")
 o:depends("type", "ss")
+o:depends("type", "trojan")
 
 o = s:option(Flag, "switch_enable", translate("Enable Auto Switch"))
 o.rmempty = false
