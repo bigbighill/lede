@@ -1,24 +1,14 @@
 #
-<<<<<<< HEAD
 # Copyright (C) 2018-2020 chenhw2 <https://github.com/chenhw2>
 #
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
 #
 #
-=======
-# Copyright (C) 2020 SharerMax
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-
->>>>>>> c395eff6e974bd226c45cf5d70eccba4677f55c0
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray-plugin
 PKG_VERSION:=1.3.0
-<<<<<<< HEAD
 PKG_RELEASE:=20200205
 PKG_MAINTAINER:=chenhw2 <https://github.com/chenhw2>
 
@@ -51,36 +41,12 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_HASH:=skip
 
 include $(INCLUDE_DIR)/package.mk
-=======
-PKG_RELEASE:=1
-PKG_MAINTAINER:=ShareMax
-PKG_BUILD_DIR:=$(BUILD_DIR)/v2ray-plugin-$(PKG_VERSION)
-
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/shadowsocks/v2ray-plugin/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=dfb86cd8d9be86e665c4b86b68cd7037e4310de001656eef01ec9aeea71edd10
-
-PKG_LICENSE:=MIT
-PKG_LICENSE_FILES:=LICENSE
-PKG_MAINTAINER:=madeye <max.c.lv@gmail.com>
-
-GO_PKG:=github.com/shadowsocks/v2ray-plugin
-
-
-include $(INCLUDE_DIR)/package.mk
-include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
-
->>>>>>> c395eff6e974bd226c45cf5d70eccba4677f55c0
 
 define Package/v2ray-plugin
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=SIP003 plugin for shadowsocks, based on v2ray
 	URL:=https://github.com/shadowsocks/v2ray-plugin
-<<<<<<< HEAD
-=======
-	DEPENDS:=$(GO_ARCH_DEPENDS) +ca-certificates
->>>>>>> c395eff6e974bd226c45cf5d70eccba4677f55c0
 endef
 
 define Package/v2ray-plugin/description
@@ -88,30 +54,16 @@ define Package/v2ray-plugin/description
 endef
 
 define Build/Prepare
-<<<<<<< HEAD
 	gzip -dc "$(DL_DIR)/$(PKG_SOURCE)" | tar -C $(PKG_BUILD_DIR)/ -xf -
 endef
 
 define Build/Compile
 	echo "$(PKG_NAME)Compile Skiped!"
-=======
-	$(call Build/Prepare/Default)
-endef
-
-define Build/Compile
-	$(call GoPackage/Build/Compile)
->>>>>>> c395eff6e974bd226c45cf5d70eccba4677f55c0
 endef
 
 define Package/v2ray-plugin/install
 	$(INSTALL_DIR) $(1)/usr/bin
-<<<<<<< HEAD
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/v2ray-plugin_linux_$(BIN_ARCH) $(1)/usr/bin/v2ray-plugin
 endef
 
-=======
-	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/v2ray-plugin $(1)/usr/bin/v2ray-plugin
-endef
-$(eval $(call GoBinPackage,v2ray-plugin))
->>>>>>> c395eff6e974bd226c45cf5d70eccba4677f55c0
 $(eval $(call BuildPackage,v2ray-plugin))

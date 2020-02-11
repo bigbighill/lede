@@ -102,9 +102,7 @@ if [ "$stype" == "ss" ] ;then
 "fast_open": $fastopen
 }
 EOF
-<<<<<<< HEAD
 
-=======
     local plugin=$(uci_get_by_name $1 plugin)
     if [ -n $plugin ] &&  [ $plugin == "simple-obfs" ]; then
         plugin="obfs-local"
@@ -112,7 +110,7 @@ EOF
     if [ -n "$plugin" -a -x "/usr/bin/$plugin" ]; then
         sed -i "s@$hostip\",@$hostip\",\n\"plugin\": \"$plugin\",\n\"plugin_opts\": \"$(uci_get_by_name $1 plugin_opts)\",@" $config_file
     fi
->>>>>>> c395eff6e974bd226c45cf5d70eccba4677f55c0
+
 elif [ "$stype" == "ssr" ] ;then
 cat <<-EOF >$config_file
 {
@@ -573,6 +571,8 @@ stop() {
 	killall -q -9 ssr-server
 	killall -q -9 kcptun-client
 	killall -q -9 ssr-local
+        killall -q -9 simple-obfs
+        killall -q -9 v2ray-plugin
 	if [ -f /var/run/pdnsd.pid ] ;then
 		kill $(cat /var/run/pdnsd.pid) >/dev/null 2>&1
 	else
