@@ -183,6 +183,7 @@ jobs:
           # CONFIG_PACKAGE_squid=m
           # CONFIG_PACKAGE_terminfo=y
           CONFIG_PACKAGE_kmod-tun=y
+          CONFIG_PACKAGE_luci-app-haproxy-tcp=y
           EOF
           
           # LuCI主题:
