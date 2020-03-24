@@ -33,7 +33,7 @@ jobs:
         with:
         #  ref: master
           ref: passwall
-
+          fetch-depth: 1000000
       - name: Space cleanup
         env:
           DEBIAN_FRONTEND: noninteractive
