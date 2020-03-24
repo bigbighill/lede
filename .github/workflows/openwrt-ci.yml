@@ -12,7 +12,9 @@ name: OpenWrt-CI
 on:
   push:
     branches: 
-      - master
+      - passwall
+  #   - master
+    
   # schedule:
   #   - cron: 0 20 * * *
   # release:
@@ -29,9 +31,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
         with:
-          ref: master
+        #  ref: master
+          ref: passwall
           fetch-depth: 1000000
-
+      
       - name: Space cleanup
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -56,7 +59,24 @@ jobs:
 
       - name: Update feeds
         run: |
+          # ./scripts/feeds update -a
+          # ./scripts/feeds install -a
+          ./scripts/feeds clean
           ./scripts/feeds update -a
+          # rm -rf feeds/lienol/package/ipt2socks
+          # rm -rf feeds/lienol/package/shadowsocksr-libev
+          # rm -rf feeds/lienol/package/pdnsd-alt
+          # rm -rf feeds/lienol/package/verysync
+          # rm -rf feeds/lienol/package/v2ray-plugin
+          # rm -rf feeds/lienol/others/luci-app-verysync
+          # rm -rf package/lean/kcptun
+          # rm -rf package/lean/trojan
+          # rm -rf package/lean/v2ray
+          # rm -rf package/lean/luci-app-kodexplorer
+          # rm -rf package/lean/luci-app-pppoe-relay
+          # rm -rf package/lean/luci-app-pptp-server
+          # rm -rf package/lean/luci-app-v2ray-server
+          # rm -rf package/lean/v2ray-plugin
           ./scripts/feeds install -a
 
       - name: Generate configuration file
@@ -147,10 +167,10 @@ jobs:
           # 常用LuCI插件选择:
           cat >> .config <<EOF
           CONFIG_PACKAGE_luci-app-adbyby-plus=y
-          CONFIG_PACKAGE_luci-app-aria2=y
+          # CONFIG_PACKAGE_luci-app-aria2=y
           # CONFIG_PACKAGE_luci-app-baidupcs-web=m
           # CONFIG_PACKAGE_luci-app-docker=m
-          CONFIG_PACKAGE_luci-app-frpc=y
+          # CONFIG_PACKAGE_luci-app-frpc=y
           # CONFIG_PACKAGE_luci-app-kodexplorer=m
           # CONFIG_PACKAGE_luci-app-minidlna=y
           # CONFIG_PACKAGE_luci-app-openvpn=y
@@ -162,6 +182,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+          CONFIG_PACKAGE_luci-app-passwall=y
           CONFIG_PACKAGE_v2ray-plugin=y
           CONFIG_PACKAGE_simple-obfs=y
           CONFIG_PACKAGE_srelay=y
@@ -246,18 +267,18 @@ jobs:
           du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
           du -h --max-depth=1 ./build_dir
           du -h --max-depth=1 ./bin
-      
+
       - name: Upload OpenWrt bin
         uses: actions/upload-artifact@master
         with:
           name: OpenWrt bin
           path: ./bin
+      
+   #   - name: Prepare artifact
+   #     run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
 
-      - name: Prepare artifact
-        run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: OpenWrt firmware
-          path: ./bin/targets/
+   #  - name: Upload artifact
+   #     uses: actions/upload-artifact@master
+   #     with:
+   #       name: OpenWrt firmware
+   #       path: ./bin/targets/
