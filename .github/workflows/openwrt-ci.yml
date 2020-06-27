@@ -63,7 +63,8 @@ jobs:
         run: |
           # ./scripts/feeds update -a
           # ./scripts/feeds install -a
-          ./scripts/feeds clean
+          #./scripts/feeds clean
+          sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
           ./scripts/feeds update -a
           # rm -rf feeds/lienol/package/ipt2socks
           # rm -rf feeds/lienol/package/shadowsocksr-libev

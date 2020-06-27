@@ -5,3 +5,4 @@ src-git bigbighill https://github.com/bigbighill/openwrt-package
 src-git vernesong https://github.com/vernesong/OpenClash;master
 #src-git lienol https://github.com/lienol/openwrt-package
 #src-git telephony https://git.openwrt.org/feed/telephony.git;openwrt-19.07
+#src-git helloworld https://github.com/fw876/helloworld
