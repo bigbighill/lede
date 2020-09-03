@@ -242,7 +242,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-zerotier is not set
           # CONFIG_PACKAGE_luci-app-cpufreq is not set
           # CONFIG_PACKAGE_luci-app-airplay2 is not set
-          # CONFIG_PACKAGE_trojan-plus is not set
+          # CONFIG_PACKAGE_Trojan-Plus is not set
           EOF
 
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
