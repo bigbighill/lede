@@ -203,7 +203,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-usb-printer=y
           CONFIG_PACKAGE_luci-app-guest-wifi=y
           # CONFIG_PACKAGE_luci-app-vsftpd=y
-          CONFIG_PACKAGE_luci-app-openclash=y
+          # CONFIG_PACKAGE_luci-app-openclash=y
           # CONFIG_PACKAGE_shadowsocks-libev-config=y
           # CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
           # CONFIG_PACKAGE_shadowsocksr-libev-server=y
