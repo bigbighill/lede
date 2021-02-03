@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray-plugin
-PKG_VERSION:=1.4.2
+PKG_VERSION:=1.8.0
 PKG_RELEASE:=1
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/teddysun/v2ray-plugin/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=4da541c2a6548be24db68ed74ee117b757b6620a9b61b5960637a71f77ad438a
+PKG_HASH:=1276bdc2f03e40219eed2894ff746e4ef5acb8a7f980c163b7a90b0b5b9058e2
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
@@ -63,7 +63,7 @@ endef
 
 define Build/Compile
 	$(call GoPackage/Build/Compile)
-	$(STAGING_DIR_HOST)/bin/upx --lzma --best $(GO_PKG_BUILD_BIN_DIR)/v2ray-plugin
+	$(STAGING_DIR_HOST)/bin/upx --lzma --best $(GO_PKG_BUILD_BIN_DIR)/v2ray-plugin || true
 endef
 
 define Package/$(PKG_NAME)/install
