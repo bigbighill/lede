@@ -6,9 +6,11 @@ Welcome to Lean's  git source of OpenWrt and packages
 -
 注意：
 -
-1. **不**要用 **root** 用户 git 和编译！！！
+1. **不**要用 **root** 用户进行编译！！！
 2. 国内用户编译前最好准备好梯子
 3. 默认登陆IP 192.168.1.1, 密码 password
+4. 免责声明：本人不欢迎例如 nobk 这种傻逼使用或者访问本源代码哪怕一个字节，否则一旦他家里因此而发生各种全家富贵的情况，与本人一律无关
+
 
 编译命令如下:
 -
@@ -16,7 +18,7 @@ Welcome to Lean's  git source of OpenWrt and packages
 
 2. 命令行输入 `sudo apt-get update` ，然后输入
 `
-sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget swig rsync
+sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync
 `
 
 3. 使用 `git clone https://github.com/coolsnowwolf/lede` 命令下载好源代码，然后 `cd lede` 进入目录
@@ -122,7 +124,7 @@ Use `make menuconfig` to configure your image.
 
 Simply running `make` will build your firmware.
 It will download all sources, build the cross-compile toolchain,
-the kernel and all choosen applications.
+the kernel and all chosen applications.
 
 To build your own firmware you need to have access to a Linux, BSD or MacOSX system
 (case-sensitive filesystem required). Cygwin will not be supported because of
