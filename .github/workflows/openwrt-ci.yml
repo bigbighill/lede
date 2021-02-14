@@ -250,6 +250,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan_Plus is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
+          # CONFIG_v2ray-plugin_INCLUDE_GOPROXY is not set
           EOF
 
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
