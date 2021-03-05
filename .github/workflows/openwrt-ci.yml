@@ -185,15 +185,13 @@ jobs:
           # CONFIG_PACKAGE_luci-app-qbittorrent=y
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Xray=y
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+      
           
          
           CONFIG_PACKAGE_luci-app-passwall=y
-          CONFIG_PACKAGE_v2ray-plugin=y
+          # CONFIG_PACKAGE_v2ray-plugin=y
           CONFIG_PACKAGE_srelay=y
           # CONFIG_PACKAGE_luci-app-smartdns=y
           CONFIG_PACKAGE_luci-app-ttyd=y
@@ -214,6 +212,10 @@ jobs:
           # CONFIG_PACKAGE_squid=m
           # CONFIG_PACKAGE_terminfo=y
           CONFIG_PACKAGE_kmod-tun=y
+          CONFIG_XRAY_CORE_PROVIDE_V2RAY_CORE=y
+          CONFIG_PACKAGE_xray-geodata=y
+          CONFIG_PACKAGE_xray-plugin=yes
+          CONFIG_XRAY_PLUGIN_PROVIDE_V2RAY_PLUGIN=yes
           EOF
           
           # LuCI主题:
@@ -245,11 +247,13 @@ jobs:
           # CONFIG_PACKAGE_luci-app-zerotier is not set
           # CONFIG_PACKAGE_luci-app-cpufreq is not set
           # CONFIG_PACKAGE_luci-app-airplay2 is not set
+          # CONFIG_PACKAGE_luci-app-passwall_INCLUDE_simple-obfs is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_simple-obfs is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server is not set
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan_Plus is not set
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
+          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin is not set
+          # CONFIG_PACKAGE_simple-obfs is not set
+          # CONFIG_PACKAGE_simple-obfs-server is not set
           # CONFIG_v2ray-plugin_INCLUDE_GOPROXY is not set
           EOF
           
