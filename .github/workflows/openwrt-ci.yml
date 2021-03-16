@@ -85,6 +85,7 @@ jobs:
           # rm -rf package/lean/luci-app-v2ray-server
           # rm -rf package/lean/v2ray-plugin
           ./scripts/feeds install -a
+          
 
       - name: Generate configuration file
         run: |
